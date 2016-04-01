@@ -61,6 +61,13 @@ class DobotGUIApp(QMainWindow):
         # connect move to angles button clicked event to function to move to the angles specified
         self.ui.pushButtonMoveToAngles.clicked.connect(self.pushButtonMoveToAngles_clicked)
 
+        self.ui.pushButtonStepForward.clicked.connect(self.pushButtonStepForward_clicked)
+        self.ui.pushButtonStepBackward.clicked.connect(self.pushButtonStepBackward_clicked)
+        self.ui.pushButtonStepLeft.clicked.connect(self.pushButtonStepLeft_clicked)
+        self.ui.pushButtonStepRight.clicked.connect(self.pushButtonStepRight_clicked)
+        self.ui.pushButtonStepUp.clicked.connect(self.pushButtonStepUp_clicked)
+        self.ui.pushButtonStepDown.clicked.connect(self.pushButtonStepDown_clicked)
+
 
         ###
         # Define application class variables.
@@ -84,6 +91,12 @@ class DobotGUIApp(QMainWindow):
             self.show_a_warning_message_box('Unknown error connecting to the arduino serial port. Code error shown below:',
                                             repr(e),
                                             'Arduino Serial Connection Error')
+
+
+        self.currentXPosition = 0
+        self.currentYPosition = 0
+        self.currentZPosition = 0
+
 
 
         ###
@@ -125,10 +138,11 @@ class DobotGUIApp(QMainWindow):
                                                 'Coordinate value conversion to float error')
             return
 
+        self.move_to_cartesian_coordinate(moveToXFloat, moveToYFloat, moveToZFloat)
 
 
-
-        # call inverse kinematics function to convert from cartesian coordinates to angles for Dobot arm
+    def move_to_cartesian_coordinate(self, moveToXFloat, moveToYFloat, moveToZFloat):
+         # call inverse kinematics function to convert from cartesian coordinates to angles for Dobot arm
         # moveToAngles is a list of angles (type float) with the following order: [base angle, upper arm angle, lower arm angle]
         # catch any errors (likely due to coordinates out of range being input) NEED TO ADDRESS THIS AT SOME POINT
         try:
@@ -205,13 +219,15 @@ class DobotGUIApp(QMainWindow):
         self.ui.labelCurrentXValue.setText(str(round(moveToXFloat,3)))
         self.ui.labelCurrentYValue.setText(str(round(moveToYFloat,3)))
         self.ui.labelCurrentZValue.setText(str(round(moveToZFloat,3)))
+        self.currentXPosition = moveToXFloat
+        self.currentYPosition = moveToYFloat
+        self.currentZPosition = moveToZFloat
 
         # code for debugging purposes. the firmware I am using (at time of writing this) is set up to print the 3 angles it read to the serial
         # this reads the 3 angles that the arduino printed from the serial. There is certainly a better way to do this.
         # this was quick and dirty and is prone to fatal errors (fatal for this program that is).
         for i in range(0,15 ):
             print ( self.arduinoSerial.readline() )
-
 
 
 
@@ -325,8 +341,109 @@ class DobotGUIApp(QMainWindow):
             returnBool = False
 
 
+
+        minAngleBetweenArms = ((180 - 81) + -79)
+        maxAngleBetweenArms = ((180 - 51) + 21)
+        angleBetweenArms = ((180 - upperArmAngle) + lowerArmAngle)
+
+        if (minAngleBetweenArms <= angleBetweenArms <= maxAngleBetweenArms):
+            # do nothing, already initialized true
+            pass
+        else:
+            self.show_a_warning_message_box('Angle between arms out of range out of range.',
+                                            'Angle between arms (the inner "elbow" angle) must be between ' +
+                                            str(minAngleBetweenArms) + ' and ' + str(maxAngleBetweenArms) + '.' +
+                                            ' It is mechanically constrained.',
+                                            'Inner Elbow Angle Range Error')
+            returnBool = False
+
+
         return returnBool
 
+
+
+
+
+    def pushButtonStepForward_clicked(self):
+        # get the step size from the appropriate line edit. convert it from string to float and do some basic checks
+        stepSizeFloat = self.convert_step_size_numerical_text_to_number_plus_check_is_valid(self.ui.lineEditStepForwardSize.text())
+        # check that there were no errors in converting text to float. if there were, don't move. else move to coordinate
+        if (stepSizeFloat == None):
+            return
+        else:
+            self.move_to_cartesian_coordinate(self.currentXPosition + stepSizeFloat, self.currentYPosition, self.currentZPosition)
+
+    def pushButtonStepBackward_clicked(self):
+        # get the step size from the appropriate line edit. convert it from string to float and do some basic checks
+        stepSizeFloat = self.convert_step_size_numerical_text_to_number_plus_check_is_valid(self.ui.lineEditStepBackwardSize.text())
+        # check that there were no errors in converting text to float. if there were, don't move. else move to coordinate
+        if (stepSizeFloat == None):
+            return
+        else:
+            self.move_to_cartesian_coordinate(self.currentXPosition - stepSizeFloat, self.currentYPosition, self.currentZPosition)
+
+    def pushButtonStepLeft_clicked(self):
+        # get the step size from the appropriate line edit. convert it from string to float and do some basic checks
+        stepSizeFloat = self.convert_step_size_numerical_text_to_number_plus_check_is_valid(self.ui.lineEditStepLeftSize.text())
+        # check that there were no errors in converting text to float. if there were, don't move. else move to coordinate
+        if (stepSizeFloat == None):
+            return
+        else:
+            self.move_to_cartesian_coordinate(self.currentXPosition, self.currentYPosition - stepSizeFloat, self.currentZPosition)
+
+    def pushButtonStepRight_clicked(self):
+        # get the step size from the appropriate line edit. convert it from string to float and do some basic checks
+        stepSizeFloat = self.convert_step_size_numerical_text_to_number_plus_check_is_valid(self.ui.lineEditStepRightSize.text())
+        # check that there were no errors in converting text to float. if there were, don't move. else move to coordinate
+        if (stepSizeFloat == None):
+            return
+        else:
+            self.move_to_cartesian_coordinate(self.currentXPosition, self.currentYPosition + stepSizeFloat, self.currentZPosition)
+
+    def pushButtonStepUp_clicked(self):
+        # get the step size from the appropriate line edit. convert it from string to float and do some basic checks
+        stepSizeFloat = self.convert_step_size_numerical_text_to_number_plus_check_is_valid(self.ui.lineEditStepUpSize.text())
+        # check that there were no errors in converting text to float. if there were, don't move. else move to coordinate
+        if (stepSizeFloat == None):
+            return
+        else:
+            self.move_to_cartesian_coordinate(self.currentXPosition, self.currentYPosition, self.currentZPosition + stepSizeFloat)
+
+    def pushButtonStepDown_clicked(self):
+        # get the step size from the appropriate line edit. convert it from string to float and do some basic checks
+        stepSizeFloat = self.convert_step_size_numerical_text_to_number_plus_check_is_valid(self.ui.lineEditStepDownSize.text())
+        # check that there were no errors in converting text to float. if there were, don't move. else move to coordinate
+        if (stepSizeFloat == None):
+            return
+        else:
+            self.move_to_cartesian_coordinate(self.currentXPosition, self.currentYPosition, self.currentZPosition - stepSizeFloat)
+
+
+    def convert_step_size_numerical_text_to_number_plus_check_is_valid(self, stepSizeText):
+        # check that the values were not empty
+        if (stepSizeText == ''):
+            self.show_a_warning_message_box('No step size value was entered.',
+                                            'Check that you entered a value for the size of the step you tried to take.',
+                                            'No step size value entered.')
+            return None
+
+        # convert values from string to float and ensure that the values entered were actually numbers
+        try:
+            stepSizeFloat = float(stepSizeText)
+        except Exception as e:
+            self.show_a_warning_message_box('Check that your step size values are numbers and not letters. The code '
+                                            + 'error is shown below:',
+                                                repr(e),
+                                                'Step size value conversion to float error')
+            return None
+
+        if (stepSizeFloat < 0):
+            self.show_a_warning_message_box('Step sizes can only be positive.',
+                                            'You entered a negative step size. Please enter a positive one. The button determines the direction.',
+                                            'Invalid Step Size')
+            return None
+
+        return stepSizeFloat
 
 
 

@@ -58,7 +58,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="pushButtonStepUp">
             <property name="text">
              <string>Up</string>
             </property>
@@ -80,7 +80,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_6"/>
+             <widget class="QLineEdit" name="lineEditStepUpSize">
+              <property name="text">
+               <string>20</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -89,7 +93,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
-           <widget class="QPushButton" name="pushButton_6">
+           <widget class="QPushButton" name="pushButtonStepDown">
             <property name="text">
              <string>Down</string>
             </property>
@@ -111,7 +115,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_7"/>
+             <widget class="QLineEdit" name="lineEditStepDownSize">
+              <property name="text">
+               <string>20</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -132,7 +140,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="pushButtonStepForward">
             <property name="text">
              <string>Forward</string>
             </property>
@@ -154,7 +162,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_2"/>
+             <widget class="QLineEdit" name="lineEditStepForwardSize">
+              <property name="text">
+               <string>20</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -165,7 +177,7 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="pushButtonStepLeft">
               <property name="text">
                <string>Left</string>
               </property>
@@ -187,7 +199,11 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_5"/>
+               <widget class="QLineEdit" name="lineEditStepLeftSize">
+                <property name="text">
+                 <string>20</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -196,7 +212,7 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_7">
             <item>
-             <widget class="QPushButton" name="pushButton_2">
+             <widget class="QPushButton" name="pushButtonStepRight">
               <property name="text">
                <string>Right</string>
               </property>
@@ -218,7 +234,11 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_4"/>
+               <widget class="QLineEdit" name="lineEditStepRightSize">
+                <property name="text">
+                 <string>20</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -229,7 +249,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
-           <widget class="QPushButton" name="pushButton_4">
+           <widget class="QPushButton" name="pushButtonStepBackward">
             <property name="text">
              <string>Backward</string>
             </property>
@@ -251,7 +271,11 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_3"/>
+             <widget class="QLineEdit" name="lineEditStepBackwardSize">
+              <property name="text">
+               <string>20</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -259,9 +283,6 @@
         </item>
        </layout>
       </widget>
-      <zorder>layoutWidget</zorder>
-      <zorder>layoutWidget</zorder>
-      <zorder>lineEditMoveToZ</zorder>
      </widget>
      <widget class="QGroupBox" name="groupBox_4">
       <property name="geometry">
@@ -303,7 +324,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditMoveToX">
             <property name="text">
-             <string>115</string>
+             <string>150</string>
             </property>
            </widget>
           </item>
@@ -351,7 +372,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditMoveToZ">
             <property name="text">
-             <string>0</string>
+             <string>200</string>
             </property>
            </widget>
           </item>
@@ -595,7 +616,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditMoveToUpperArmAngle">
             <property name="text">
-             <string>-20</string>
+             <string>90</string>
             </property>
            </widget>
           </item>
@@ -619,7 +640,7 @@
           <item>
            <widget class="QLineEdit" name="lineEditMoveToLowerArmAngle">
             <property name="text">
-             <string>12</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
