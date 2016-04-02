@@ -28,6 +28,8 @@ IMPORTANT: For everything to work properly, before you send move commands, you n
 
 TO DO:
 
+-Need a way to check that connection to a port is proper, i.e. when it sends commands it's using the right firmware. Right now, I can connect to other arduinos without the correct firmware or even any old random open port. Sending commands to these ports causes errors and the application to crash.
+
 -Verify inverse kinematics and fix any problems
 
 -Greatly improve the serial communication protocol. I just used the quickest method I could find that works so I could get testing the inverse kinematics.
