@@ -171,7 +171,7 @@ def get_radius_in_horizontal_plane_to_cartesian_end_effector_position_using_2d_r
 """
 
 
-if __name__ == '__main__':
+def command_line_test_inverse_kinematics():
 
 
 
