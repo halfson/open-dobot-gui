@@ -30,7 +30,13 @@ TO DO:
 
 -Need a way to check that connection to a port is proper, i.e. when it sends commands it's using the right firmware. Right now, I can connect to other arduinos without the correct firmware or even any old random open port. Sending commands to these ports causes errors and the application to crash.
 
+-Need to prevent user from being able to send commands when serial port not connected
+
 -Verify inverse kinematics and fix any problems
+
+-A way to "teach" the robot (i.e. save a sequence of moves/actions)
+
+-support for standard effectors included with the dobot (very low priority for me (Mike), may not get done since I don't have enough time in the day)
 
 -Greatly improve the serial communication protocol. I just used the quickest method I could find that works so I could get testing the inverse kinematics.
 
@@ -44,5 +50,5 @@ TO DO:
 
 -implement incrememntal move functions
 
--much more, but too tired to list it all
+-much more, too lazy to list it all
 
