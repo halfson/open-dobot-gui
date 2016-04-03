@@ -643,6 +643,3 @@ if __name__ == '__main__':
     # Says to exit the whole code when the Qt application is closed. app.exec returns some value when qt app quits
     sys.exit(app.exec_())
 
-
-
-
