@@ -81,9 +81,11 @@ class DobotGUIApp(QMainWindow):
         self.arduinoSerial = None
 
         # current position variables
-        self.currentXPosition = 0
-        self.currentYPosition = 0
-        self.currentZPosition = 0
+        startXYZ = DobotInverseKinematics.get_cartesian_coordinate_from_angles_using_forward_kinematics(0,90,0)
+        self.currentXPosition = startXYZ[0]
+        self.currentYPosition = startXYZ[1]
+        self.currentZPosition = startXYZ[2]
+        print(startXYZ)
 
 
 
@@ -130,11 +132,37 @@ class DobotGUIApp(QMainWindow):
                                                 'Coordinate value conversion to float error')
             return
 
-        self.move_to_cartesian_coordinate(moveToXFloat, moveToYFloat, moveToZFloat)
+        # divide a line between starting and end points into many equally spaced points and move to each of those points,
+        # so the arm moves in a straight line
+        startingPointX = self.currentXPosition
+        startingPointY = self.currentYPosition
+        startingPointZ = self.currentZPosition
+        directionX = moveToXFloat - startingPointX
+        directionY = moveToYFloat - startingPointY
+        directionZ = moveToZFloat - startingPointZ
+        linearMovementResolution = 1
+
+        #-899 signals to the arduino that the line of points is being started
+        self.arduinoSerial.write( struct.pack('f',-899) )
+
+        for i in range(1, linearMovementResolution+1):
+            nextPointX = startingPointX + (directionX * (i/linearMovementResolution))
+            nextPointY = startingPointY + (directionY * (i/linearMovementResolution))
+            nextPointZ = startingPointZ + (directionZ * (i/linearMovementResolution))
+            self.move_to_cartesian_coordinate(nextPointX, nextPointY, nextPointZ)
+            """
+            print('i:')
+            print(i)
+            print(nextPointX)
+            print(nextPointY)
+            print(nextPointZ)
+            """
+        #-900 signals to the arduino that the line of points has been filled
+        self.arduinoSerial.write( struct.pack('f',-900) )
 
 
     def move_to_cartesian_coordinate(self, moveToXFloat, moveToYFloat, moveToZFloat):
-         # call inverse kinematics function to convert from cartesian coordinates to angles for Dobot arm
+        # call inverse kinematics function to convert from cartesian coordinates to angles for Dobot arm
         # moveToAngles is a list of angles (type float) with the following order: [base angle, upper arm angle, lower arm angle]
         # catch any errors (likely due to coordinates out of range being input) NEED TO ADDRESS THIS AT SOME POINT
         try:
@@ -215,11 +243,13 @@ class DobotGUIApp(QMainWindow):
         self.currentYPosition = moveToYFloat
         self.currentZPosition = moveToZFloat
 
+
         # code for debugging purposes. the firmware I am using (at time of writing this) is set up to print the 3 angles it read to the serial
         # this reads the 3 angles that the arduino printed from the serial. There is certainly a better way to do this.
         # this was quick and dirty and is prone to fatal errors (fatal for this program that is).
-        for i in range(0,15 ):
+        for i in range(0,16 ):
             print ( self.arduinoSerial.readline() )
+
 
 
 
@@ -642,4 +672,7 @@ if __name__ == '__main__':
 
     # Says to exit the whole code when the Qt application is closed. app.exec returns some value when qt app quits
     sys.exit(app.exec_())
+
+
+
 
