@@ -120,35 +120,6 @@ def get_distance_from_origin_to_cartesian_point_3D(x,y,z):
     return distanceToEndPoint
 
 
-
-#forward kinematics
-def get_cartesian_coordinate_from_angles_using_forward_kinematics(baseAngle, upperArmAngle, lowerArmAngle):
-    #convert degrees to radians
-    baseAngle = (baseAngle/180) * math.pi
-    upperArmAngle = (upperArmAngle/180) * math.pi
-    lowerArmAngle = (lowerArmAngle/180) * math.pi
-
-    radius = get_radius_in_horizontal_plane_to_end_effector_position(upperArmAngle,lowerArmAngle)
-    x = radius * math.cos(baseAngle)
-    y = radius * math.sin(baseAngle)
-    z = heightFromBase + (math.sin(upperArmAngle) * lengthUpperArm)  + (math.sin(lowerArmAngle) * lengthLowerArm)
-    return [x,y,z]
-
-
-
-def get_radius_in_horizontal_plane_to_end_effector_position(upperArmAngle, lowerArmAngle):
-    print(upperArmAngle)
-    print(lowerArmAngle)
-    radius = (math.cos(upperArmAngle) * lengthUpperArm) + (math.cos(lowerArmAngle) * lengthLowerArm)
-    print(radius)
-    return radius
-
-
-
-
-
-
-
 def get_upper_arm_angle():
     #return the angle in degrees or radians for the upper arm from the accelerometer data and/or known theoretical angle
     return 45#or radians!
@@ -185,7 +156,10 @@ def get_base_angle():
     #end get polar coordinates
 
 
-
+def get_radius_in_horizontal_plane_to_cartesian_end_effector_position_using_2d_revolute_revolute_forward_kinematics(upperArmAngle, lowerArmAngle, upperArmLength, lowerArmLength):
+    #the equation for radius is determined using forward kinematics, just uses socahtoa rules, namely coa here.
+    radius = ( math.cos(upperArmAngle) * upperArmLength ) + ( math.cos(upperArmAngle + lowerArmAngle) * lowerArmLength )
+    return radius
 
 
 
