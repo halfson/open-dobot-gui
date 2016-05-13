@@ -1,13 +1,11 @@
 # open-dobot-gui
 GUI Application to control a Dobot robotic arm via an Arduino Mega 2560 and a RAMPS 1.4 board. 
 
-Inverse Kinematics Implemented! I will write up more about this some other time. There's a link in the code to a youtube video that explains most of it.
-
+Inverse Kinematics Implemented.
 100% open source hardware and software
 
 MIT License
 
-**NOTE: I will be abandoning this software and focusing on DobotPi (link below). I did take this code a bit further, but ran in to problems with sending data serially (data couldn't be sent and processed fast enough). The end result was the arm moving unacceptably slow. While there are ways to get around that, like using a binary serial protocol, they are complex and take a lot of code (just look at the open-dobot code to get an idea), I found it best to avoid the serial problem altogether by using a Raspberry Pi 3. I love it so much that I am abandoning the RAMPS 1.4 route. You can read about DobotPi (the raspberry pi dobot control software) here (based off of the open-dobot-gui code, fairly well documented): https://github.com/mikef522/DobotPi. I would strongly recommend you go this route if possible, but it's up to you. Also, setting up Qt on the Pi 3 is amazingly simple (1 simple terminal command).**
 
 Videos:
 
@@ -18,7 +16,7 @@ Videos:
 [Inverse Kinematics C++ 3D simulation Demo](https://youtu.be/5oExIlkn5EA)
 
 
-The gui app is written in python and uses pyqt. It is not yet completely functional, but works enough for testing purposes (if you know how to code). Most of the remaining work on it is fairly easy to do, just takes time, which I am a bit short on due to school. Most updates will probably happen on weekends. Also included in this repository is a c++ qt project which performs a 3d simulation of the inverse kinematics, which is useful in verifying that the inverse kinematics are correctly implemented. Currently, I'm having trouble defining the work area limits. I need to do that somehow. The lower arm angle limits is what's tripping me up. The inverse kinematics on the robot itself seems to work. Just be careful about transforming angles to the correct orientation. I might have messed that up a bit. If I did, it's subtle. 
+The gui app is written in python and uses pyqt. It is not yet completely functional, but works enough for testing purposes (if you know how to code). 
 
 IMPORTANT: For everything to work properly, before you send move commands, you need to position the upper arm completely vertical (defined as 90 degrees) and the lower arm completely horizontal (defined as 0 degrees). Doesn't matter where the base is. Wherever it starts is defined as 0.
 
@@ -50,5 +48,5 @@ TO DO:
 
 -implement incrememntal move functions
 
--much more, too lazy to list it all
+
 
