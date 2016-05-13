@@ -7,7 +7,7 @@ Inverse Kinematics Implemented! I will write up more about this some other time.
 
 MIT License
 
-NOTE: This repository is literally just getting started. As such, the application is not quite yet ready for those who don't know how to code or as a standalone release. It's fairly close though. The major value of this software is the inverse kinematics functions at the moment.
+**NOTE: I will be abandoning this software and focusing on DobotPi (link below). I did take this code a bit further, but ran in to problems with sending data serially (data couldn't be sent and processed fast enough). The end result was the arm moving unacceptably slow. While there are ways to get around that, like using a binary serial protocol, they are complex and take a lot of code (just look at the open-dobot code to get an idea), I found it best to avoid the serial problem altogether by using a Raspberry Pi 3. I love it so much that I am abandoning the RAMPS 1.4 route. You can read about DobotPi (the raspberry pi dobot control software) here (based off of the open-dobot-gui code, fairly well documented): https://github.com/mikef522/DobotPi. I would strongly recommend you go this route if possible, but it's up to you. Also, setting up Qt on the Pi 3 is amazingly simple (1 simple terminal command).**
 
 Videos:
 
