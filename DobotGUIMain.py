@@ -200,7 +200,7 @@ class DobotGUIApp(QMainWindow):
         ###
         #set up the dobot driver
         ###
-        self.driver = DobotDriver('COM9')
+        self.driver = DobotDriver('COM3')
         self.driver.Open()
         successes = 0
         i = 0
